@@ -12,6 +12,8 @@ BLOCK_SIZE = 32
 def connect(ip, port, block, keyid):
 
     global MESSAGE_LENGTH, BLOCK_SIZE
+    
+    flag = False
 
     cipher_size = len(block)
 
@@ -29,9 +31,10 @@ def connect(ip, port, block, keyid):
 
       num_blocks = (cipher_size/BLOCK_SIZE)-1 # num_blocks to be decrypted (IV not counting as ciphertext block)
 
+      message = block + ':' + str(num_blocks) + ':' + keyid
+
       try:
-          # Send data
-          message = block + ':' + str(num_blocks) + ':' + keyid  
+          # Send data  
           sock.sendall(message)
 
           # Look for the response
@@ -42,9 +45,15 @@ def connect(ip, port, block, keyid):
               data = sock.recv(MESSAGE_LENGTH)
               amount_received += len(data)
 
-          if "successful" in data:
-            print >>sys.stderr, 'Sending: "%s"' % message
-            print >>sys.stderr, 'Received: "%s"' % data
+              if "successful" in data:
+                #print >>sys.stderr, 'Sending: "%s"' % message
+                #print >>sys.stderr, 'Received: "%s"' % data
+                flag = True
 
       finally:
           sock.close()
+          if flag:
+            return message
+          else:
+            return ''
+          
