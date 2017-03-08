@@ -18,26 +18,27 @@ def hex2str(h):
     else:
         return result    
 
-#print "Last byte..."
-#for i in range (0,255):
-#    currentData = sendData[0:len(sendData) - 2] + hex2str(dec2hex(i))
-#    result = client.connect(ipaddr,port,currentData,keyid)
-
-#    if result != '' and currentData != sendData:
-#        i = currentData[len(sendData) - 2:len(sendData)]
-#        print "Last byte in hex is: ", int(i) ^ 01, "\nLast byte in decimal is: ", int(i,16)
-
-
-thisData = sendData[len(sendData) - 4 : len(sendData)]
-
+print "Last byte..."
 for i in range (0,255):
-    hexOne = int(sendData[len(sendData) - 4 : len(sendData) - 3],16) ^ 2 ^ i 
-    hexTwo = int(sendData[len(sendData) - 2 : len(sendData) - 1],16) ^ 2 ^ 36
-    currentEnd = hex2str(dec2hex(hexOne)) + hex2str(dec2hex(hexTwo))
-    
-    currentData = sendData[0:len(sendData) - 4] + currentEnd
+    currentData = sendData[0:len(sendData) - 2] + hex2str(dec2hex(i))
     result = client.connect(ipaddr,port,currentData,keyid)
-    
-    if result != '' and currentData != sendData:
-        print result
 
+    if result != '' and currentData != sendData:
+        i = currentData[len(sendData) - 2:len(sendData)]
+        print "Data sent to get valid padding:", currentData
+        print "Last byte in hex is: ", int(i) ^ 01, "\nLast byte in decimal is: ", int(i,16)
+
+
+#thisData = sendData[len(sendData) - 4 : len(sendData)]
+
+#for i in range (0,255):
+#    hexOne = int(sendData[len(sendData) - 4 : len(sendData) - 3],16) ^ 2 ^ i 
+#    hexTwo = int(sendData[len(sendData) - 2 : len(sendData) - 1],16) ^ 2 ^ 36
+#    currentEnd = hex2str(dec2hex(hexOne)) + hex2str(dec2hex(hexTwo))
+    
+#    currentData = sendData[0:len(sendData) - 4] + currentEnd
+#    result = client.connect(ipaddr,port,currentData,keyid)
+    
+#    if result != '' and currentData != sendData:
+#        i = currentData[len(sendData) - 4:len(sendData) - 2]
+#        print "Last byte in hex is: ", dec2hex(int(i,16) ^ 02), "\nLast byte in decimal is: ", int(i,16)

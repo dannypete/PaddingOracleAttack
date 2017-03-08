@@ -46,9 +46,9 @@ def connect(ip, port, block, keyid):
               amount_received += len(data)
 
               if "successful" in data:
+                flag = True
                 #print >>sys.stderr, 'Sending: "%s"' % message
                 #print >>sys.stderr, 'Received: "%s"' % data
-                flag = True
 
       finally:
           sock.close()
