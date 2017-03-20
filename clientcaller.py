@@ -25,9 +25,9 @@ def hex2str(h):
         return result    
 
 totalResult = ''
-for blockNumber in range(0,1):
+for blockNumber in range(0,10):
 
-    currentBlocksRaw = sendData[len(sendData)-64:len(sendData)]
+    currentBlocksRaw = sendData[blockNumber * 32:(blockNumber + 2) * 32]
     blockOne = currentBlocksRaw[0:32]
     blockTwo = currentBlocksRaw[32:64]
 
@@ -357,7 +357,7 @@ for blockNumber in range(0,1):
 
 
 
-#print totalResult
+print "Result:", totalResult
 
 
 
